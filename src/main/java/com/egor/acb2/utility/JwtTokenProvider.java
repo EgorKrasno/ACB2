@@ -34,7 +34,7 @@ public class JwtTokenProvider {
         String[] claims = getClaimsFromUser(userPrincipal);
         return JWT.create()
                 .withIssuer(ISSUER)
-                .withAudience("Hot Garbage")
+                .withAudience(AUDIENCE)
                 .withIssuedAt(new Date())
                 .withSubject(userPrincipal.getUsername())
                 .withArrayClaim("authorities", claims)

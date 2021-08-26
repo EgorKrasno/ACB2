@@ -10,15 +10,16 @@ import com.egor.acb2.utility.JwtTokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.egor.acb2.constants.SecurityConstant.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.OK;
+
 
 @RestController
 @RequestMapping(value = "user")
@@ -29,6 +30,13 @@ public class UserController {
     public UserController(MyUserDetailsService userService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @GetMapping("/testGet")
+    public Map<String, String> testGet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Test", "Hello World");
+        return map;
     }
 
 

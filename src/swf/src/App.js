@@ -34,6 +34,7 @@ const App = () => {
             const user = await response.json();
             const token = response.headers.get("Jwt-Token");
             localStorage.setItem("currentUser", JSON.stringify({user, token}));
+            setUserData(user);
             setLoggedIn(true);
 
         } catch (err) {
@@ -68,7 +69,7 @@ const App = () => {
                 <div className="w-full mx-auto px-2 sm:px-6 lg:px-8">
                     <div className="relative flex items-center justify-between h-16">
                         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                            <Link to="/" className="text-white text-2xl">ACB 2.0</Link>
+                            <Link to="/" className="text-yellow-400 font-bold text-5xl flex items-center">🤖 <span className="mx-2 text-3xl">2.0</span></Link>
                         </div>
                         {!loggedIn ?
                             <div

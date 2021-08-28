@@ -1,6 +1,10 @@
 import {useState} from "react";
 import {saveCheckIn} from "../services/Service";
-import Question from "../component/Question";
+import StepWizard from "react-step-wizard";
+import FormPageOne from "../component/form-pages/FormPageOne";
+import FormPageTwo from "../component/form-pages/FormPageTwo";
+import "animate.css"
+import FormPageThree from "../component/form-pages/FormPageThree";
 
 const Home = ({user}) => {
     const [results, setResults] = useState(
@@ -8,52 +12,41 @@ const Home = ({user}) => {
             questionOne: "",
             questionTwo: "",
             questionThree: "",
-            questionFour: ""
+            questionFour: "",
+            ac: ""
         });
 
-    const handleClick = async () => {
-        try {
-            const response = await saveCheckIn(results);
-            const data = await response.json();
-            console.log(data);
-        } catch (err){
-            console.error(err.error);
-        }
+
+    //put async back when done testing log
+    const handleSubmit =  () => {
+        // try {
+        //     const response = await saveCheckIn(results);
+        //     const data = await response.json();
+        //     console.log(data);
+        // } catch (err) {
+        //     console.error(err.error);
+        // }
+        console.log(results);
     }
 
+    let customAnim = {
+        enterRight: 'animate__animated animate__fadeInRight animate__faster',
+        enterLeft: 'animate__animated animate__fadeInLeft animate__faster',
+        exitRight: 'animate__animated animate__fadeOutRight animate__faster',
+        exitLeft: 'animate__animated animate__fadeOutLeft animate__faster',
+        intro: '',
+    };
+
     return (
-        <div className="flex flex-col flex-1 h-screen">
-            <div className="container max-w-xl mx-auto flex-1 flex flex-col items-center justify-center">
-                <h1 className="text-white text-6xl mb-8 font-medium capitalize" >Good Morning {user.firstName}</h1>
-                <div className="px-12 py-6 border-2 border-purple-800 border-opacity-50 rounded-3xl w-full"
-                     style={{backgroundColor: "#171727"}}>
-                    <h1 className="text-white font-medium text-3xl text-center mb-6">COVID Status</h1>
+        <div className="flex flex-col flex-1 h-screen mb-8">
+            <div className="container max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center">
+                <h1 className="text-yellow-400 text-center text-5xl mb-8 font-medium capitalize animate__animated animate__jackInTheBox">Good Morning {user.firstName}</h1>
+                    <StepWizard transitions={customAnim} style={{backgroundColor: "#171727"}} className="overflow-hidden px-12  py-6 border-2 border-purple-700 border-opacity-50 rounded-3xl">
+                        <FormPageOne results={results} setResults={setResults} />
+                        <FormPageTwo results={results} setResults={setResults}/>
+                        <FormPageThree results={results} setResults={setResults} handleSubmit={handleSubmit}/>
+                    </StepWizard>
 
-                    <div className="space-y-14">
-                        <Question handleQuestion={(result) => setResults({...results, questionOne: result})} question="Have you tested positive for COVID-19 in the past 14
-                                days?"/>
-
-                        <Question handleQuestion={(result) => setResults({...results, questionTwo: result})} question="Do you currently exhibit any symptoms of COVID-19
-                                days?" questionInfo="eg., fever, cough, shortness of
-                                breath, chills, diarrhea, muscle pain, headache, sore throat, loss of taste and/or
-                                smell"/>
-
-                        <Question handleQuestion={(result) => setResults({...results, questionThree: result})}
-                                  question="Have you been in contact with anyone who has tested
-                                positive for COVID-19 in the past 14 days?" questionInfo="Exposure: In close contact (within 6
-                                feet) with the individual for at least 15 minutes or more over a 24 hour period."/>
-
-                        <Question handleQuestion={(result) => setResults({...results, questionFour: result})} question="I understand and I must stay home if I exhibit any
-                                symptoms of COVID-19 or have tested positive for COVID in the past 14 days."/>
-
-
-                    </div>
-                    <button
-                        className="w-full text-center font-medium py-3 rounded-3xl text-white focus:outline-none mt-16 bg-gradient-to-r from-pink-500 to-purple-500"
-                        onClick={() => handleClick()}
-                    >Submit
-                    </button>
-                </div>
             </div>
         </div>
     );

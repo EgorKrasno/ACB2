@@ -24,16 +24,20 @@ const FormPageTwo = (props) => {
         props.setResults({...props.results, ac: inputValue})
     };
 
+
     return (<>
             <h1 className="text-white font-medium text-3xl text-center mb-6">Accountability</h1>
-            <div className="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
-                {ac_data.map(e => <RadioInput value={e.value} label={e.status} isChecked={selectedInput === e.value}
+            <div className="grid grid-cols-1 gap-6 px-2 sm:px-0 mb-5 md:grid-cols-2">
+                {ac_data.map(e => <RadioInput key={e.value} value={e.value} label={e.status} isChecked={selectedInput === e.value}
                                               handleChange={handleChange}/>)}
             </div>
 
-            <div className="flex flex-row space-x-4">
+            {props.errorMessage !== "" &&
+            <h3 className="font-bold text-center text-red-500 text-lg">{props.errorMessage}</h3>
+            }
+            <div className="mt-5 flex flex-row space-x-4">
                 <FormBackButton clickHandler={props.previousStep}/>
-                <FormNextButton label="Submit" handleClick={props.handleSubmit}/>
+                <FormNextButton loading={props.loading} label="Submit" handleClick={props.handleSubmit}/>
             </div>
         </>
     );

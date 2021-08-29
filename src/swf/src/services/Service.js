@@ -15,9 +15,10 @@ const checkStatus = response => {
         return response;
     }
     // convert non-2xx HTTP responses into errors:
-    const error = new Error(response.statusText);
-    error.response = response;
-    return Promise.reject(error);
+    // const error = new Error(response.statusText);
+    // console.log(response.json());
+    // error.response = response;
+    return Promise.reject(response);
 }
 
 export const saveCheckIn = (checkIn) =>

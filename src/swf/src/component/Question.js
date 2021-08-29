@@ -9,7 +9,7 @@ const Question = ({question, questionInfo, handleQuestion}) => {
             <h1 className="text-white text-lg">{question}</h1>
             {questionInfo !== null &&
             <h1 className="text-white text-sm text-gray-400 mt-0.5">{questionInfo}</h1>}
-            <div className="flex space-x-8">
+            <div className="flex space-x-4 sm:space-x-8">
                 <div
                     onClick={() => {
                         setQuestionYes(false);

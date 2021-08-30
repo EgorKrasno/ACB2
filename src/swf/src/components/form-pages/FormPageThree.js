@@ -1,10 +1,14 @@
 import FormBackButton from "../FormBackButton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RadioInput from "../RadioInput";
 import FormNextButton from "../FormNextButton";
 
-const FormPageTwo = (props) => {
+const FormPageThree = (props) => {
     const [selectedInput, setSelectedInput] = useState("");
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     const ac_data = [
         {value: "1", status: "Present"},
@@ -28,7 +32,8 @@ const FormPageTwo = (props) => {
     return (<>
             <h1 className="text-white font-medium text-3xl text-center mb-6">Accountability</h1>
             <div className="grid grid-cols-1 gap-6 px-2 sm:px-0 mb-5 md:grid-cols-2">
-                {ac_data.map(e => <RadioInput key={e.value} value={e.value} label={e.status} isChecked={selectedInput === e.value}
+                {ac_data.map(e => <RadioInput key={e.value} value={e.value} label={e.status}
+                                              isChecked={selectedInput === e.value}
                                               handleChange={handleChange}/>)}
             </div>
 
@@ -43,4 +48,4 @@ const FormPageTwo = (props) => {
     );
 }
 
-export default FormPageTwo;
+export default FormPageThree;

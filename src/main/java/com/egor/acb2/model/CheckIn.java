@@ -21,6 +21,7 @@ public class CheckIn {
     private String questionTwo;
     private String questionThree;
     private String questionFour;
+    private String ac;
     private String name;
     private Date date;
 }

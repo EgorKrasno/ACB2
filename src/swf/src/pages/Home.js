@@ -1,13 +1,16 @@
 import {useState} from "react";
 import StepWizard from "react-step-wizard";
-import FormPageOne from "../component/form-pages/FormPageOne";
-import FormPageTwo from "../component/form-pages/FormPageTwo";
+import FormPageOne from "../components/form-pages/FormPageOne";
+import FormPageTwo from "../components/form-pages/FormPageTwo";
 import "animate.css"
-import FormPageThree from "../component/form-pages/FormPageThree";
+import FormPageThree from "../components/form-pages/FormPageThree";
+import {saveCheckIn} from "../services/Service";
+import CheckedIn from "../components/CheckedIn";
 
 const Home = ({user}) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [checkedIn, setCheckedIn] = useState(false);
     const [results, setResults] = useState(
         {
             questionOne: "",
@@ -17,25 +20,24 @@ const Home = ({user}) => {
             ac: ""
         });
 
-
     //put async back when done testing log
-    const handleSubmit = () => {
-        if (results.ac !== "" &&
-            results.questionOne !== "" &&
-            results.questionTwo !== "" &&
-            results.questionThree !== "" &&
+    const handleSubmit = async () => {
+        if (
+            results.ac !== "" ||
+            results.questionOne !== "" ||
+            results.questionTwo !== "" ||
+            results.questionThree !== "" ||
             results.questionFour !== ""
-        ){
+        ) {
             setLoading(true);
             setErrorMessage("");
-            console.log(results);
-            // try {
-            //     const response = await saveCheckIn(results);
-            //     const data = await response.json();
-            //     console.log(data);
-            // } catch (err) {
-            //     console.error(err.error);
-            // }
+            try {
+                await saveCheckIn(results);
+                setCheckedIn(true);
+            } catch (err) {
+                const response = await err.json();
+                setErrorMessage(response.message);
+            }
         } else {
             setErrorMessage("Please answer all questions to submit.")
         }
@@ -56,16 +58,21 @@ const Home = ({user}) => {
             {/*    <p className="font-bold">Warning</p>*/}
             {/*    <p >Something not ideal might be happening.</p>*/}
             {/*</div>*/}
-            <div className="flex flex-col flex-1 h-screen mb-6 mx-6">
-                <div className="container max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center">
-                    <h1 className="text-yellow-400 text-center text-5xl mb-8 font-medium capitalize animate__animated animate__jackInTheBox">Good
-                        Morning {user.firstName}</h1>
-                    <StepWizard transitions={customAnim} style={{backgroundColor: "#171727"}}
-                                className="overflow-hidden px-6 sm:px-12 py-6 border-2 border-purple-700 border-opacity-50 rounded-3xl">
-                        <FormPageOne results={results} setResults={setResults}/>
-                        <FormPageTwo results={results} setResults={setResults}/>
-                        <FormPageThree results={results} setResults={setResults} handleSubmit={handleSubmit} loading={loading} errorMessage={errorMessage}/>
-                    </StepWizard>
+            <div className="flex flex-col flex-1 mb-6 mx-6">
+                <div className="container max-w-2xl mx-auto flex-1 flex flex-col items-center mt-2 sm:mt-32">
+                    {checkedIn ? <CheckedIn user={user} setCheckIn={() => setCheckedIn(false)}/> :
+                        <>
+                            <h1 className="text-yellow-400 text-center text-5xl mb-8 font-medium capitalize animate__animated animate__jackInTheBox">Good
+                                Morning {user.firstName}</h1>
+                            <StepWizard transitions={customAnim} style={{backgroundColor: "#171727"}}
+                                        className="overflow-hidden px-6 sm:px-12 py-6 border-2 border-purple-700 border-opacity-50 rounded-3xl">
+                                <FormPageOne results={results} setResults={setResults}/>
+                                <FormPageTwo results={results} setResults={setResults}/>
+                                <FormPageThree results={results} setResults={setResults} handleSubmit={handleSubmit}
+                                               loading={loading} errorMessage={errorMessage}/>
+                            </StepWizard></>
+                    }
+
                 </div>
             </div>
 

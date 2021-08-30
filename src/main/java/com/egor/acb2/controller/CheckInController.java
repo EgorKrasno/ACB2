@@ -1,5 +1,6 @@
 package com.egor.acb2.controller;
 
+import com.egor.acb2.exception.InvalidStatusException;
 import com.egor.acb2.model.CheckIn;
 import com.egor.acb2.response.CheckInRequest;
 import com.egor.acb2.security.UserPrincipal;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -25,7 +29,7 @@ public class CheckInController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<CheckIn> saveCheckIn(Authentication authentication, @RequestBody CheckInRequest request){
+    public ResponseEntity<CheckIn> saveCheckIn(Authentication authentication, @Valid @RequestBody CheckInRequest request) throws InvalidStatusException {
         CheckIn checkIn = checkInService.saveCheckIn(request, authentication);
         return new ResponseEntity<>(checkIn, OK);
     }

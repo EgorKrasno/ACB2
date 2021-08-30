@@ -61,6 +61,11 @@ public class ExceptionHandling implements ErrorController {
         return new ResponseEntity<>(new HttpResponse(BAD_REQUEST.value(), BAD_REQUEST, BAD_REQUEST.getReasonPhrase(), message), BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<HttpResponse> invalidStatusException(InvalidStatusException exception){
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
 //    @ExceptionHandler(AccessDeniedException.class)
 //    public ResponseEntity<HttpResponse> accessDeniedException() {
 //        return createHttpResponse(FORBIDDEN, NOT_ENOUGH_PERMISSION);

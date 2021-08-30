@@ -1,6 +1,6 @@
 import {useState} from "react";
-import SubmitButton from "../component/SubmitButton";
-import FormLayout from "../component/FormLayout";
+import SubmitButton from "../components/SubmitButton";
+import FormLayout from "../components/FormLayout";
 
 const Login = ({handleLogin, errorMessage, setErrorMessage, loading}) => {
     const [email, setEmail] = useState("");

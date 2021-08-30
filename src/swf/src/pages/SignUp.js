@@ -1,6 +1,6 @@
 import {useState} from "react";
-import SubmitButton from "../component/SubmitButton";
-import FormLayout from "../component/FormLayout";
+import SubmitButton from "../components/SubmitButton";
+import FormLayout from "../components/FormLayout";
 
 const SignUp = ({handleSubmit, errorMessage, setErrorMessage, loading}) => {
     const [firstName, setFirstName] = useState("");

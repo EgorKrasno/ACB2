@@ -1,23 +1,26 @@
 package com.egor.acb2.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Setter
 @Getter
 @ToString
 public class CheckInRequest {
 
+    @NotBlank(message = "Please answer all questions")
     private String questionOne;
+    @NotBlank(message = "Please answer all questions")
     private String questionTwo;
+    @NotBlank(message = "Please answer all questions")
     private String questionThree;
+    @NotBlank(message = "Please answer all questions")
     private String questionFour;
+    @NotBlank(message = "Please answer all questions")
+    private String ac;
 }
 
 

@@ -35,7 +35,7 @@ const App = () => {
         setShowMobileMenu(false);
         setLoading(true);
         try {
-            const registerResponse = await register({firstName, lastName, email, password});
+            await register({firstName, lastName, email, password});
             //Test Refactor
             const response = await login({email, password});
             const user = await response.json();
@@ -88,15 +88,16 @@ const App = () => {
 
                         <div className="-mr-2 flex sm:hidden">
                             <button
+                                data-testid="mobile-menu-button"
                                 onClick={() => setShowMobileMenu(!showMobileMenu)}
                                 className="text-yellow-400 dark:text-white hover:text-yellow-200 inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
-                                {showMobileMenu ? <FiX size={38}/> : <FiMenu size={38}/>}
+                                {showMobileMenu ? <FiX title="mobile-menu-close" size={38}/> :
+                                    <FiMenu title="mobile-menu-open" size={38}/>}
                             </button>
                         </div>
 
                         {showMobileMenu &&
-                        <div className="sm:hidden z-10">
-
+                        <div data-testid="mobile-menu-dropdown" className="sm:hidden z-10">
                             <div
                                 className="origin-top-right absolute right-0 rounded-md mt-6 w-52 px-4 divide-y divide-gray-600"
                                 style={{backgroundColor: "#171727"}}>
@@ -105,7 +106,10 @@ const App = () => {
                                         <div>
                                             <Link to="/signup">
                                                 <button
-                                                    onClick={() => setShowMobileMenu(false)}
+                                                    onClick={() => {
+                                                        setErrorMessage("")
+                                                        setShowMobileMenu(false)
+                                                    }}
                                                     className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
                                                     Sign up
                                                 </button>
@@ -114,7 +118,10 @@ const App = () => {
                                         <div>
                                             <Link to="/login">
                                                 <button
-                                                    onClick={() => setShowMobileMenu(false)}
+                                                    onClick={() => {
+                                                        setErrorMessage("");
+                                                        setShowMobileMenu(false)
+                                                    }}
                                                     className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
                                                     Login
                                                 </button>
@@ -142,12 +149,14 @@ const App = () => {
                                 className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <Link to="/login">
                                     <button
-                                        className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-purple-500"
+                                        onClick={()=>setErrorMessage("")}
+                                        className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
                                     >Login
                                     </button>
                                 </Link>
                                 <Link to="/signup">
                                     <button
+                                        onClick={()=>setErrorMessage("")}
                                         className="text-center font-small px-3 py-2 rounded-md text-white focus:outline-none bg-gradient-to-r from-pink-500 to-purple-500">
                                         Sign Up
                                     </button>
@@ -163,7 +172,6 @@ const App = () => {
                                 </button>
                             </div>
                         }
-
                     </div>
                 </div>
 
@@ -175,8 +183,9 @@ const App = () => {
                                     setErrorMessage={setErrorMessage}/>}
                     </Route>
                     <Route path="/login">
-                        {loggedIn ? <Redirect to="/"/> : <Login loading={loading} handleLogin={handleLogin} errorMessage={errorMessage}
-                                                                setErrorMessage={setErrorMessage}/>}
+                        {loggedIn ? <Redirect to="/"/> :
+                            <Login loading={loading} handleLogin={handleLogin} errorMessage={errorMessage}
+                                   setErrorMessage={setErrorMessage}/>}
                     </Route>
                     <Route path="/">
                         {!loggedIn ? <Redirect to="/login"/> : <Home user={userData}/>}

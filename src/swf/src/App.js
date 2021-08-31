@@ -78,7 +78,7 @@ const App = () => {
 
     return (
         <Router>
-            <div className="h-screen flex flex-col" style={{backgroundColor: "#0B091C"}}>
+            <div className="min-h-screen flex flex-col" style={{backgroundColor: "#0B091C"}}>
                 <div className="w-full mx-auto px-2 px-4 sm:px-8">
                     <div className="relative flex items-center justify-between h-20">
                         <div className="flex-1 flex items-stretch justify-start">

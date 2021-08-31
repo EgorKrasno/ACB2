@@ -51,3 +51,13 @@ export const register = user =>
             body: JSON.stringify(user)
         }
     ).then(checkStatus)
+
+export const getTodaysStatus = () =>
+    fetch("check/today", {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + getToken()
+            },
+            method: 'GET',
+        }
+    ).then(checkStatus)

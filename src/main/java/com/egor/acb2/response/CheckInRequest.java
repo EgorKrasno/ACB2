@@ -5,19 +5,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Setter
 @Getter
 @ToString
 public class CheckInRequest {
 
-    @NotBlank(message = "Please answer all questions")
+    @Pattern(regexp="[yn]")
     private String questionOne;
-    @NotBlank(message = "Please answer all questions")
+    @Pattern(regexp="[yn]")
     private String questionTwo;
-    @NotBlank(message = "Please answer all questions")
+    @Pattern(regexp="[yn]")
     private String questionThree;
-    @NotBlank(message = "Please answer all questions")
+    @Pattern(regexp="[yn]")
     private String questionFour;
     @NotBlank(message = "Please answer all questions")
     private String ac;

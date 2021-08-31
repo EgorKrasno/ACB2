@@ -23,5 +23,14 @@ public class CheckIn {
     private String questionFour;
     private String ac;
     private String name;
-    private Date date;
+//    private Date date;
+
+    @Temporal(TemporalType.DATE)
+    Date checkInDate;
+
+    @Temporal(TemporalType.TIME)
+    Date checkInTime;
+
+    @Temporal(value=TemporalType.TIMESTAMP)
+    Date creationDateTime;
 }

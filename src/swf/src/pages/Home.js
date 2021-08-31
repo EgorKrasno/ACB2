@@ -20,7 +20,7 @@ const Home = ({user}) => {
             ac: ""
         });
 
-    //put async back when done testing log
+
     const handleSubmit = async () => {
         if (
             results.ac !== "" ||
@@ -72,7 +72,6 @@ const Home = ({user}) => {
                                                loading={loading} errorMessage={errorMessage}/>
                             </StepWizard></>
                     }
-
                 </div>
             </div>
 

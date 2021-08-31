@@ -4,9 +4,11 @@ import {useEffect} from "react";
 
 const CheckedIn = ({user, setCheckIn}) => {
     const { height, width } = useWindowDimensions();
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
     return (
         <>
             <Confetti
@@ -14,7 +16,7 @@ const CheckedIn = ({user, setCheckIn}) => {
                 height={height}
             />
 
-            <div className="flex flex-col items-center space-y-6 mt-24 sm:mt-64">
+            <div className="flex flex-col items-center space-y-6 mt-24 sm:mt-52 overflow-hidden">
                 <h1 className="text-yellow-400 text-center text-6xl font-bold capitalize animate__animated animate__fadeInDownBig overflow-hidden">You're
                     checked in {user.firstName} !</h1>
                 <button

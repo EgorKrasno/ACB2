@@ -12,6 +12,7 @@ import {register, login} from "./services/Service";
 import {useEffect, useState} from "react";
 import {FiMenu} from "react-icons/fi";
 import {FiX} from "react-icons/fi";
+import Admin from "./pages/Admin";
 
 const App = () => {
     const [userData, setUserData] = useState({});
@@ -77,7 +78,7 @@ const App = () => {
 
     return (
         <Router>
-            <div className="min-h-screen flex flex-col" style={{backgroundColor: "#0B091C"}}>
+            <div className="h-screen flex flex-col" style={{backgroundColor: "#0B091C"}}>
                 <div className="w-full mx-auto px-2 px-4 sm:px-8">
                     <div className="relative flex items-center justify-between h-20">
                         <div className="flex-1 flex items-stretch justify-start">
@@ -149,14 +150,14 @@ const App = () => {
                                 className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <Link to="/login">
                                     <button
-                                        onClick={()=>setErrorMessage("")}
+                                        onClick={() => setErrorMessage("")}
                                         className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
                                     >Login
                                     </button>
                                 </Link>
                                 <Link to="/signup">
                                     <button
-                                        onClick={()=>setErrorMessage("")}
+                                        onClick={() => setErrorMessage("")}
                                         className="text-center font-small px-3 py-2 rounded-md text-white focus:outline-none bg-gradient-to-r from-pink-500 to-purple-500">
                                         Sign Up
                                     </button>
@@ -167,7 +168,7 @@ const App = () => {
                                 className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <button
                                     onClick={handleLogout}
-                                    className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-purple-500"
+                                    className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
                                 >Logout
                                 </button>
                             </div>
@@ -177,6 +178,7 @@ const App = () => {
 
 
                 <Switch>
+                    <Route path="/admin"><Admin/></Route>
                     <Route path="/signup">
                         {loggedIn ? <Home user={userData}/> :
                             <SignUp loading={loading} handleSubmit={handleSubmit} errorMessage={errorMessage}

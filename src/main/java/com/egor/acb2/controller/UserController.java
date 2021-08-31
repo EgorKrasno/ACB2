@@ -32,14 +32,6 @@ public class UserController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @GetMapping("/testGet")
-    public Map<String, String> testGet() {
-        Map<String, String> map = new HashMap<>();
-        map.put("Test", "Hello World");
-        return map;
-    }
-
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody UserRegisterRequest request) throws  EmailExistsException {
         User newUser = userService.register(request);

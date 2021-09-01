@@ -41,4 +41,9 @@ public class CheckInController {
         return new ResponseEntity<>(checkIns, OK);
     }
 
+    @GetMapping("/checked")
+    public ResponseEntity<Boolean> isCheckedIn(Authentication authentication) {
+        return new ResponseEntity<>(checkInService.isCheckedIn(authentication), OK);
+    }
+
 }

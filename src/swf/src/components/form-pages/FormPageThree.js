@@ -11,16 +11,16 @@ const FormPageThree = (props) => {
     }, [])
 
     const ac_data = [
-        {value: "1", status: "Present"},
-        {value: "2", status: "Telework"},
-        {value: "3", status: "TDY"},
-        {value: "4", status: "PTDY"},
-        {value: "5", status: "CON Leave"},
-        {value: "6", status: "Leave"},
-        {value: "7", status: "Pass"},
-        {value: "8", status: "Sick Call"},
-        {value: "9", status: "Emergency"},
-        {value: "10", status: "Other"},
+        "Present",
+        "Telework",
+        "TDY",
+        "PTDY",
+        "CON Leave",
+        "Leave",
+        "Pass",
+        "Sick Call",
+        "Emergency",
+        "Other",
     ]
 
     const handleChange = inputValue => {
@@ -32,8 +32,7 @@ const FormPageThree = (props) => {
     return (<>
             <h1 className="text-white font-medium text-3xl text-center mb-6">Accountability</h1>
             <div className="grid grid-cols-1 gap-6 px-2 sm:px-0 mb-5 md:grid-cols-2">
-                {ac_data.map(e => <RadioInput key={e.value} value={e.value} label={e.status}
-                                              isChecked={selectedInput === e.value}
+                {ac_data.map(e => <RadioInput key={e} value={e} isChecked={selectedInput === e}
                                               handleChange={handleChange}/>)}
             </div>
 

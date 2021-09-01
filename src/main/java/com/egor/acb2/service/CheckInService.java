@@ -7,13 +7,10 @@ import com.egor.acb2.repository.CheckInRepository;
 import com.egor.acb2.repository.UserRepository;
 import com.egor.acb2.response.CheckInRequest;
 import com.egor.acb2.response.TodayStatusResponse;
-import com.egor.acb2.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,31 +28,25 @@ public class CheckInService {
     }
 
     public CheckIn saveCheckIn(CheckInRequest request, Authentication auth) throws InvalidStatusException {
-        String ac = switch (request.getAc()) {
-            case "1" -> "Present";
-            case "2" -> "Telework";
-            case "3" -> "TDY";
-            case "4" -> "PTDY";
-            case "5" -> "CON Leave";
-            case "6" -> "Leave";
-            case "7" -> "Pass";
-            case "8" -> "Sick Call";
-            case "9" -> "Emergency";
-            case "10" -> "Other";
-            default -> throw new InvalidStatusException("Invalid Accountability Status");
-        };
+        String ac = request.getAc();
+//            throw new InvalidStatusException("Invalid Accountability Status");
         User user = userRepository.findUserByUsername(auth.getName());
-        CheckIn checkIn = new CheckIn();
+        String fullName = user.getFirstName() + " " + user.getLastName();
         Date date = new Date();
+        CheckIn checkIn = new CheckIn();
+
         checkIn.setCheckInDate(date);
         checkIn.setCheckInTime(date);
         checkIn.setCreationDateTime(date);
-        checkIn.setName(user.getFirstName() + " " + user.getLastName());
+        checkIn.setName(fullName);
         checkIn.setQuestionOne(request.getQuestionOne());
         checkIn.setQuestionTwo(request.getQuestionTwo());
         checkIn.setQuestionThree(request.getQuestionThree());
         checkIn.setQuestionFour(request.getQuestionFour());
         checkIn.setAc(ac);
+
+        Optional<CheckIn> optCheckIn = checkInRepository.findByCheckInDateAndName(date, fullName);
+        optCheckIn.ifPresent(op -> checkInRepository.delete(op));
         checkInRepository.save(checkIn);
         return checkIn;
     }
@@ -70,22 +61,30 @@ public class CheckInService {
             String fullName = user.getFirstName() + " " + user.getLastName();
 
             Optional<CheckIn> optCheckIn = checkIns.stream().filter(e -> e.getName().equals(fullName)).findFirst();
+            //If user has checked in today (is in CheckIn Row for today)
             if(optCheckIn.isPresent()){
                 CheckIn foundCheckIn = optCheckIn.get();
-                String covidStatus = foundCheckIn.getQuestionOne().equals("y") &&
-                        foundCheckIn.getQuestionTwo().equals("y") &&
-                        foundCheckIn.getQuestionThree().equals("y") &&
+                String covidStatus = foundCheckIn.getQuestionOne().equals("n") &&
+                        foundCheckIn.getQuestionTwo().equals("n") &&
+                        foundCheckIn.getQuestionThree().equals("n") &&
                         foundCheckIn.getQuestionFour().equals("y") ? "Good" : "Bad";
 
                 TodayStatusResponse userResponse = new TodayStatusResponse(foundCheckIn.getName(), foundCheckIn.getCheckInTime(), foundCheckIn.getAc(), covidStatus);
                 result.add(userResponse);
+                //is user has not checked in today (not in CheckInRow for today)
             } else {
                 result.add(new TodayStatusResponse(fullName));
             }
-
-
         }
         return result;
+    }
+
+    public boolean isCheckedIn(Authentication authentication) {
+        User user = userRepository.findUserByUsername(authentication.getName());
+        String username = user.getFirstName() + " " + user.getLastName();
+
+        Optional<CheckIn> op = checkInRepository.findByCheckInDateAndName(new Date(), username);
+        return op.isPresent();
     }
 }
 

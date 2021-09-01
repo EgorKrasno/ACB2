@@ -61,3 +61,13 @@ export const getTodaysStatus = () =>
             method: 'GET',
         }
     ).then(checkStatus)
+
+export const isCheckedIn = () =>
+    fetch("check/checked", {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + getToken()
+            },
+            method: 'GET',
+        }
+    ).then(checkStatus)

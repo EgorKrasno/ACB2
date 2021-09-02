@@ -71,7 +71,6 @@ public class CheckInService {
 
                 TodayStatusResponse userResponse = new TodayStatusResponse(foundCheckIn.getName(), foundCheckIn.getCheckInTime(), foundCheckIn.getAc(), covidStatus);
                 result.add(userResponse);
-                //is user has not checked in today (not in CheckInRow for today)
             } else {
                 result.add(new TodayStatusResponse(fullName));
             }

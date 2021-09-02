@@ -37,7 +37,7 @@ public class CheckInController {
         return new ResponseEntity<>(checkIn, OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('checkIn:read')")
     @GetMapping("/today")
     public ResponseEntity<List<TodayStatusResponse>> getTodayStatus(Authentication authentication) {
         List<TodayStatusResponse> checkIns = checkInService.getTodayStatus(authentication);

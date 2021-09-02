@@ -1,5 +1,6 @@
 package com.egor.acb2.security;
 
+import com.egor.acb2.enumeration.Role;
 import com.egor.acb2.exception.EmailExistsException;
 import com.egor.acb2.model.User;
 import com.egor.acb2.repository.UserRepository;
@@ -59,7 +60,7 @@ public class MyUserDetailsService implements UserDetailsService {
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setNotLocked(true);
         newUser.setJoinDate(new Date());
-//        newUser.setRole(ROLE_USER.getAuthorities()); //returns ROLE_USER
+        newUser.setRole(ROLE_USER.toString()); //returns ROLE_USER
         newUser.setAuthorities(ROLE_USER.getAuthorities()); // String[]
 
         userRepository.save(newUser);

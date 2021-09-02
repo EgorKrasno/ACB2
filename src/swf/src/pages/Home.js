@@ -21,14 +21,13 @@ const Home = ({user}) => {
     });
 
     useEffect(() => {
-        // setLoading(true);
         async function fetchData() {
             try {
                 const result = await isCheckedIn();
                 const data = await result.json();
                 setCheckedIn(data);
             } catch (e) {
-                console.log("error");
+                console.log(await e.json());
             } finally {
                 setLoading(false);
             }

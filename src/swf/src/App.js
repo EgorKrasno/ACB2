@@ -36,9 +36,7 @@ const App = () => {
         setShowMobileMenu(false);
         setLoading(true);
         try {
-            await register({firstName, lastName, email, password});
-            //Test Refactor
-            const response = await login({email, password});
+            const response = await register({firstName, lastName, email, password});
             const user = await response.json();
             const token = response.headers.get("Jwt-Token");
             localStorage.setItem("currentUser", JSON.stringify({user, token}));
@@ -47,13 +45,14 @@ const App = () => {
         } catch (err) {
             const response = await err.json();
             setErrorMessage(response.message);
+        }finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     const handleLogin = async ({email, password}) => {
         setShowMobileMenu(false)
-        setLoading(false);
+        setLoading(true);
         try {
             const response = await login({email, password});
             const user = await response.json();
@@ -64,9 +63,9 @@ const App = () => {
         } catch (err) {
             const response = await err.json();
             setErrorMessage(response.message);
-        }
+        } finally {
         setLoading(false);
-
+        }
     }
 
     const handleLogout = () => {
@@ -74,7 +73,6 @@ const App = () => {
         setUserData("");
         localStorage.clear();
     }
-
 
     return (
         <Router>
@@ -103,6 +101,7 @@ const App = () => {
                                 className="origin-top-right absolute right-0 rounded-md mt-6 w-52 px-4 divide-y divide-gray-600"
                                 style={{backgroundColor: "#171727"}}>
                                 {!loggedIn ?
+                                    // Not Logged in on mobile
                                     <>
                                         <div>
                                             <Link to="/signup">
@@ -129,7 +128,18 @@ const App = () => {
                                             </Link>
                                         </div>
                                     </>
+                                    //Logged in on Mobile
                                     : <div>
+                                        <Link to="/dashboard">
+                                            <button
+                                                onClick={() => {
+                                                    setErrorMessage("");
+                                                    setShowMobileMenu(false)
+                                                }}
+                                                className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
+                                                Dashboard
+                                            </button>
+                                        </Link>
                                         <button
                                             onClick={() => {
                                                 handleLogout();
@@ -146,6 +156,7 @@ const App = () => {
 
 
                         {!loggedIn ?
+                            //Not logged in on Desktop
                             <div
                                 className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <Link to="/login">
@@ -164,8 +175,16 @@ const App = () => {
                                 </Link>
 
                             </div> :
+                            //Logged in on Desktop
                             <div
                                 className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                                <Link to="/dashboard">
+                                    <button
+                                        onClick={() => setErrorMessage("")}
+                                        className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400">
+                                        Dashboard
+                                    </button>
+                                </Link>
                                 <button
                                     onClick={handleLogout}
                                     className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
@@ -178,7 +197,9 @@ const App = () => {
 
 
                 <Switch>
-                    <Route path="/admin"><Admin/></Route>
+                    <Route path="/dashboard">
+                        {!loggedIn ? <Redirect to="/login"/> : <Admin/>}
+                    </Route>
                     <Route path="/signup">
                         {loggedIn ? <Home user={userData}/> :
                             <SignUp loading={loading} handleSubmit={handleSubmit} errorMessage={errorMessage}

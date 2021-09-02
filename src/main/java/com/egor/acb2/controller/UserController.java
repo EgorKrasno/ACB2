@@ -35,7 +35,14 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody UserRegisterRequest request) throws  EmailExistsException {
         User newUser = userService.register(request);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        System.out.println(newUser);
+        User userToLogin = new User();
+        userToLogin.setUsername(request.getEmail());
+        userToLogin.setPassword(request.getPassword());
+        User loggedInUser = userService.login(userToLogin);
+
+        HttpHeaders jwtHeader = getJwtHeader(new UserPrincipal(loggedInUser));
+        return new ResponseEntity<>(loggedInUser, jwtHeader, HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -46,7 +53,6 @@ public class UserController {
     }
     
 
-    //Should probably probably move this mess
     private HttpHeaders getJwtHeader(UserPrincipal userPrincipal) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER, jwtTokenProvider.generateJwtToken(userPrincipal));

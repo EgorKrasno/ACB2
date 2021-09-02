@@ -23,7 +23,6 @@ public class CheckIn {
     private String questionFour;
     private String ac;
     private String name;
-//    private Date date;
 
     @Temporal(TemporalType.DATE)
     Date checkInDate;

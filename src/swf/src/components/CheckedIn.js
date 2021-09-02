@@ -1,5 +1,3 @@
-import useWindowDimensions from "../hooks/UseWindowDimensions";
-
 import {useEffect} from "react";
 
 const CheckedIn = ({user, setCheckIn}) => {

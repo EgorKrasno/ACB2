@@ -10,14 +10,10 @@ const getToken = () => {
     }
 }
 
-const checkStatus = response => {
+const checkStatus = async response => {
     if (response.ok) {
         return response;
     }
-    // convert non-2xx HTTP responses into errors:
-    // const error = new Error(response.statusText);
-    // console.log(response.json());
-    // error.response = response;
     return Promise.reject(response);
 }
 
@@ -62,7 +58,7 @@ export const getTodaysStatus = () =>
         }
     ).then(checkStatus)
 
-export const isCheckedIn = () =>
+export const isCheckedIn =  () =>
     fetch("check/checked", {
             headers: {
                 'Content-Type': 'application/json',

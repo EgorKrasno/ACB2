@@ -47,7 +47,7 @@ public class ExceptionHandling implements ErrorController {
 
     @ExceptionHandler(EmailExistsException.class)
     public ResponseEntity<HttpResponse> emailExistException(EmailExistsException exception) {
-        return createHttpResponse(BAD_REQUEST, "What are you doing dude");
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

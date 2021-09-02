@@ -66,7 +66,7 @@ const UserRow = ({user}) => {
             </td>
             <td className="px-8 py-5 text-sm">
                                 <span
-                                    className={`relative inline-block px-3 rounded-full py-1 font-semibold leading-tight ${isCovid()}`}>
+                                    className={`relative inline-block rounded-full py-1 font-semibold leading-tight ${isCovid()}`}>
                                     <span className="relative">
                                         {user.covidStatus !== null ? user.covidStatus : "N/A"}
                                     </span>
@@ -74,7 +74,7 @@ const UserRow = ({user}) => {
             </td>
             <td className="px-8 py-5 text-sm">
                                 <span
-                                    className={`relative inline-block px-3 rounded-full py-1 font-semibold leading-tight ${isEmergency()}`}>
+                                    className={`relative inline-block rounded-full py-1 font-semibold leading-tight ${isEmergency()}`}>
                                     <span className="relative">
                                         {user.acStatus !== null ? user.acStatus : "N/A"}
                                     </span>
@@ -84,7 +84,7 @@ const UserRow = ({user}) => {
                                 <span
                                     className={`relative inline-block rounded-full px-3 text-gray-200 py-1 font-semibold leading-tight ${isLate()}`}>
                                     <span className="relative">
-                                        {user.checkInTime !== null ? user.checkInTime : "N/A"}
+                                        {user.checkInTime !== null ? user.checkInTime.slice(0,5) : "N/A"}
                                     </span>
                                 </span>
             </td>

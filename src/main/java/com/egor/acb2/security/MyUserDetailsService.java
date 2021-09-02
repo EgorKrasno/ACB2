@@ -1,6 +1,5 @@
 package com.egor.acb2.security;
 
-import com.egor.acb2.enumeration.Role;
 import com.egor.acb2.exception.EmailExistsException;
 import com.egor.acb2.model.User;
 import com.egor.acb2.repository.UserRepository;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 import static com.egor.acb2.enumeration.Role.ROLE_ADMIN;
-import static com.egor.acb2.enumeration.Role.ROLE_USER;
 
 @Service
 @Transactional
@@ -37,13 +35,12 @@ public class MyUserDetailsService implements UserDetailsService {
         this.authenticationManager = authenticationManager;
     }
 
-    @Override //Called by AythenticationProvider for authentication
+    @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null) { //User auth succesfull, find his username
+        if (user == null) {
             throw new UsernameNotFoundException("Username not found:  " + username);
         } else {
-            //Username was correct but password was not
             user.setLastLoginDate(new Date());
             userRepository.save(user);
         }
@@ -61,11 +58,12 @@ public class MyUserDetailsService implements UserDetailsService {
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setNotLocked(true);
         newUser.setJoinDate(new Date());
+
+        //testing purposes, move to super admin later
         newUser.setRole(ROLE_ADMIN.toString()); //returns ROLE_USER
         newUser.setAuthorities(ROLE_ADMIN.getAuthorities()); // String[]
 
         userRepository.save(newUser);
-
         return newUser;
     }
 

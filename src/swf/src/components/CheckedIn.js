@@ -7,7 +7,7 @@ const CheckedIn = ({user, setCheckIn}) => {
     }, [])
 
     return (
-            <div className="flex flex-col items-center space-y-6 mt-24 sm:mt-52 overflow-hidden">
+            <div  className="flex flex-col items-center space-y-6 mt-24 sm:mt-52 overflow-hidden">
                 <h1 className="text-yellow-400 text-center text-6xl font-bold capitalize animate__animated animate__fadeInDown overflow-hidden">You're
                     checked in {user.firstName}!</h1>
                 <button

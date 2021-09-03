@@ -39,7 +39,7 @@ const UserRow = ({user}) => {
 
     const profileLetters = () => {
         let sp = user.name.split(' ');
-        return sp[0].charAt(0) + sp[1].charAt(0);
+        return sp[0].charAt(0).toUpperCase() + sp[1].charAt(0).toUpperCase();
     }
 
 
@@ -58,7 +58,7 @@ const UserRow = ({user}) => {
                         </a>
                     </div>
                     <div className="ml-3">
-                        <p className="text-gray-200 whitespace-no-wrap">
+                        <p className="text-gray-200 whitespace-no-wrap capitalize">
                             {user.name}
                         </p>
                     </div>

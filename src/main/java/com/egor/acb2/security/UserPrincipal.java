@@ -18,7 +18,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //changed from stream(
         return Stream.of(this.user.getAuthorities()).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
@@ -41,8 +40,6 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return user.isNotLocked();
     }
-
-
 
     // Not Used
     @Override

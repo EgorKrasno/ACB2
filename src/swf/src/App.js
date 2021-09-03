@@ -10,16 +10,18 @@ import Login from './pages/Login';
 import Home from "./pages/Home";
 import {register, login} from "./services/Service";
 import {useEffect, useState} from "react";
-import {FiMenu} from "react-icons/fi";
-import {FiX} from "react-icons/fi";
 import Admin from "./pages/Admin";
+import MobileMenu from "./NavBar/MobileMenu";
+import DesktopMenu from "./NavBar/DesktopMenu";
+import Modal from "./components/Modal";
+
 
 const App = () => {
     const [userData, setUserData] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
-    const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem("currentUser") !== null) {
@@ -33,7 +35,6 @@ const App = () => {
     }, []);
 
     const handleSubmit = async ({firstName, lastName, email, password}) => {
-        setShowMobileMenu(false);
         setLoading(true);
         try {
             const response = await register({firstName, lastName, email, password});
@@ -45,13 +46,12 @@ const App = () => {
         } catch (err) {
             const response = await err.json();
             setErrorMessage(response.message);
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
 
     const handleLogin = async ({email, password}) => {
-        setShowMobileMenu(false)
         setLoading(true);
         try {
             const response = await login({email, password});
@@ -64,14 +64,20 @@ const App = () => {
             const response = await err.json();
             setErrorMessage(response.message);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }
 
-    const handleLogout = () => {
-        setLoggedIn(false);
-        setUserData("");
-        localStorage.clear();
+    const showLogoutModal = () => setIsOpen(true);
+
+    const handleLogout = (e) => {
+        setIsOpen(true);
+        if (e){
+            setLoggedIn(false);
+            setUserData("");
+            localStorage.clear();
+        }
+
     }
 
     return (
@@ -84,117 +90,13 @@ const App = () => {
                                 className="mx-2 text-3xl">2.0</span></Link>
                         </div>
 
+                        <MobileMenu loggedIn={loggedIn} setErrorMessage={setErrorMessage}
+                                    handleLogout={showLogoutModal}/>
 
-                        <div className="-mr-2 flex sm:hidden">
-                            <button
-                                data-testid="mobile-menu-button"
-                                onClick={() => setShowMobileMenu(!showMobileMenu)}
-                                className="text-yellow-400 dark:text-white hover:text-yellow-200 inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
-                                {showMobileMenu ? <FiX title="mobile-menu-close" size={38}/> :
-                                    <FiMenu title="mobile-menu-open" size={38}/>}
-                            </button>
-                        </div>
-
-                        {showMobileMenu &&
-                        <div data-testid="mobile-menu-dropdown" className="sm:hidden z-10">
-                            <div
-                                className="origin-top-right absolute right-0 rounded-md mt-6 w-52 px-4 divide-y divide-gray-600"
-                                style={{backgroundColor: "#171727"}}>
-                                {!loggedIn ?
-                                    // Not Logged in on mobile
-                                    <>
-                                        <div>
-                                            <Link to="/signup">
-                                                <button
-                                                    onClick={() => {
-                                                        setErrorMessage("")
-                                                        setShowMobileMenu(false)
-                                                    }}
-                                                    className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
-                                                    Sign up
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <div>
-                                            <Link to="/login">
-                                                <button
-                                                    onClick={() => {
-                                                        setErrorMessage("");
-                                                        setShowMobileMenu(false)
-                                                    }}
-                                                    className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
-                                                    Login
-                                                </button>
-                                            </Link>
-                                        </div>
-                                    </>
-                                    //Logged in on Mobile
-                                    : <div>
-                                        <Link to="/dashboard">
-                                            <button
-                                                onClick={() => {
-                                                    setErrorMessage("");
-                                                    setShowMobileMenu(false)
-                                                }}
-                                                className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
-                                                Dashboard
-                                            </button>
-                                        </Link>
-                                        <button
-                                            onClick={() => {
-                                                handleLogout();
-                                                setShowMobileMenu(false);
-                                            }}
-                                            className="text-gray-100 hover:text-yellow-400 py-3 block rounded-md text-base font-medium">
-                                            Logout
-                                        </button>
-                                    </div>
-                                }
-
-                            </div>
-                        </div>}
-
-
-                        {!loggedIn ?
-                            //Not logged in on Desktop
-                            <div
-                                className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                <Link to="/login">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
-                                    >Login
-                                    </button>
-                                </Link>
-                                <Link to="/signup">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="text-center font-small px-3 py-2 rounded-md text-white focus:outline-none bg-gradient-to-r from-pink-500 to-purple-500">
-                                        Sign Up
-                                    </button>
-                                </Link>
-
-                            </div> :
-                            //Logged in on Desktop
-                            <div
-                                className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                <Link to="/dashboard">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400">
-                                        Dashboard
-                                    </button>
-                                </Link>
-                                <button
-                                    onClick={handleLogout}
-                                    className="mr-6 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
-                                >Logout
-                                </button>
-                            </div>
-                        }
+                        <DesktopMenu loggedIn={loggedIn} setErrorMessage={setErrorMessage}
+                                     handleLogout={showLogoutModal}/>
                     </div>
                 </div>
-
 
                 <Switch>
                     <Route path="/dashboard">
@@ -215,6 +117,8 @@ const App = () => {
                     </Route>
                 </Switch>
             </div>
+
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} modalAction={handleLogout}/>
         </Router>
     );
 }

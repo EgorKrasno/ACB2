@@ -1,6 +1,5 @@
 package com.egor.acb2.security;
 
-import com.egor.acb2.enumeration.Role;
 import com.egor.acb2.exception.EmailExistsException;
 import com.egor.acb2.model.User;
 import com.egor.acb2.repository.UserRepository;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 import static com.egor.acb2.enumeration.Role.ROLE_ADMIN;
-import static com.egor.acb2.enumeration.Role.ROLE_USER;
 
 @Service
 @Transactional
@@ -60,6 +58,8 @@ public class MyUserDetailsService implements UserDetailsService {
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setNotLocked(true);
         newUser.setJoinDate(new Date());
+
+        //testing purposes, move to super admin later
         newUser.setRole(ROLE_ADMIN.toString());
         newUser.setAuthorities(ROLE_ADMIN.getAuthorities()); // String[]
 

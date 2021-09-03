@@ -37,13 +37,12 @@ public class MyUserDetailsService implements UserDetailsService {
         this.authenticationManager = authenticationManager;
     }
 
-    @Override //Called by AythenticationProvider for authentication
+    @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null) { //User auth succesfull, find his username
+        if (user == null) {
             throw new UsernameNotFoundException("Username not found:  " + username);
         } else {
-            //Username was correct but password was not
             user.setLastLoginDate(new Date());
             userRepository.save(user);
         }
@@ -54,18 +53,17 @@ public class MyUserDetailsService implements UserDetailsService {
         validateUser(request);
         User newUser = new User();
         newUser.setActive(true);
-        newUser.setEmail(request.getEmail());
-        newUser.setUsername(request.getEmail());
+//        newUser.setEmail(request.getEmail());
+        newUser.setUsername(request.getEmail()); //set email as the username
         newUser.setFirstName(request.getFirstName());
         newUser.setLastName(request.getLastName());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setNotLocked(true);
         newUser.setJoinDate(new Date());
-        newUser.setRole(ROLE_ADMIN.toString()); //returns ROLE_USER
+        newUser.setRole(ROLE_ADMIN.toString());
         newUser.setAuthorities(ROLE_ADMIN.getAuthorities()); // String[]
 
         userRepository.save(newUser);
-
         return newUser;
     }
 

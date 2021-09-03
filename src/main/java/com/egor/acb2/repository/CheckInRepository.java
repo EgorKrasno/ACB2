@@ -13,8 +13,4 @@ import java.util.Optional;
 public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
     List<CheckIn> findAllByCheckInDate(Date publicationDate);
     Optional<CheckIn> findByCheckInDateAndName(Date publicationDate, String Name);
-
-    List<CheckIn> findAllByCheckInTimeBetween(
-            Date checkInTimeStart,
-            Date checkInTimeEnd);
 }

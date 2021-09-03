@@ -37,7 +37,6 @@ public class CheckInService {
 
         checkIn.setCheckInDate(date);
         checkIn.setCheckInTime(date);
-        checkIn.setCreationDateTime(date);
         checkIn.setName(fullName);
         checkIn.setQuestionOne(request.getQuestionOne());
         checkIn.setQuestionTwo(request.getQuestionTwo());

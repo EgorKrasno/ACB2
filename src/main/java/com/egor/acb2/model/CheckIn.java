@@ -1,5 +1,6 @@
 package com.egor.acb2.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class CheckIn {
     @Id
@@ -29,7 +31,4 @@ public class CheckIn {
 
     @Temporal(TemporalType.TIME)
     Date checkInTime;
-
-    @Temporal(value=TemporalType.TIMESTAMP)
-    Date creationDateTime;
 }

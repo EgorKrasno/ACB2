@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Menu, Transition} from "@headlessui/react";
-import {FiCodesandbox, FiLogIn, FiLogOut, FiMenu, FiSettings, FiUser, FiUserPlus} from "react-icons/fi";
+import {FiCodesandbox, FiLogIn, FiLogOut, FiMenu, FiUserPlus} from "react-icons/fi";
 import {Fragment} from "react";
 
 const MobileMenu = ({loggedIn, setErrorMessage, handleLogout}) => {

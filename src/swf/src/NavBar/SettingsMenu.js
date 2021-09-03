@@ -23,19 +23,7 @@ const SettingsMenu = ({handleLogout}) => {
 
                     <Menu.Item as="div">
                         {({active}) => (
-                            <button
-                                onClick={handleLogout}
-                                className={`${
-                                    active ? 'text-yellow-400' : 'text-gray-100'
-                                } group flex rounded-md items-center w-full py-2.5 text-base`}
-                            >
-                                <FiLogOut className="mr-3"/>
-                                Logout
-                            </button>
-                        )}
-                    </Menu.Item>
-                    <Menu.Item as="div">
-                        {({active}) => (
+
                             <button
                                 onClick={() => alert("Account page would go here if I had one")}
                                 className={`${
@@ -44,6 +32,19 @@ const SettingsMenu = ({handleLogout}) => {
                             >
                                 <FiUser className="mr-3"/>
                                 Account
+                            </button>
+                        )}
+                    </Menu.Item>
+                    <Menu.Item as="div">
+                        {({active}) => (
+                            <button
+                                onClick={handleLogout}
+                                className={`${
+                                    active ? 'text-yellow-400' : 'text-gray-100'
+                                } group flex rounded-md items-center w-full py-2.5 text-base`}
+                            >
+                                <FiLogOut className="mr-3"/>
+                                Logout
                             </button>
                         )}
                     </Menu.Item>

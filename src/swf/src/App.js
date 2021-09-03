@@ -9,21 +9,19 @@ import SignUp from "./pages/SignUp";
 import Login from './pages/Login';
 import Home from "./pages/Home";
 import {register, login} from "./services/Service";
-import {useEffect, useState, Fragment} from "react";
-import {FiMenu,} from "react-icons/fi";
-import {FiX} from "react-icons/fi";
+import {useEffect, useState} from "react";
 import Admin from "./pages/Admin";
-import MobileMenu from "./components/MobileMenu";
-import SettingsMenu from "./components/SettingsMenu";
+import MobileMenu from "./NavBar/MobileMenu";
+import DesktopMenu from "./NavBar/DesktopMenu";
+import Modal from "./components/Modal";
 
 
 const App = () => {
     const [userData, setUserData] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
-    const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem("currentUser") !== null) {
@@ -70,10 +68,16 @@ const App = () => {
         }
     }
 
-    const handleLogout = () => {
-        setLoggedIn(false);
-        setUserData("");
-        localStorage.clear();
+    const showLogoutModal = () => setIsOpen(true);
+
+    const handleLogout = (e) => {
+        setIsOpen(true);
+        if (e){
+            setLoggedIn(false);
+            setUserData("");
+            localStorage.clear();
+        }
+
     }
 
     return (
@@ -86,45 +90,13 @@ const App = () => {
                                 className="mx-2 text-3xl">2.0</span></Link>
                         </div>
 
-                        <MobileMenu loggedIn={loggedIn} setErrorMessage={setErrorMessage} handleLogout={handleLogout}/>
+                        <MobileMenu loggedIn={loggedIn} setErrorMessage={setErrorMessage}
+                                    handleLogout={showLogoutModal}/>
 
-
-                        {!loggedIn ?
-                            //Not logged in on Desktop
-                            <div
-                                className="hidden sm:block space-x-5">
-                                <Link to="/login">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400"
-                                    >Login
-                                    </button>
-                                </Link>
-                                <Link to="/signup">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="text-center font-small px-3 py-2 rounded-md text-white focus:outline-none bg-gradient-to-r from-pink-500 to-purple-500">
-                                        Sign Up
-                                    </button>
-                                </Link>
-
-                            </div> :
-                            //Logged in on Desktop
-                            <div
-                                className="hidden sm:flex items-center">
-                                <Link to="/dashboard">
-                                    <button
-                                        onClick={() => setErrorMessage("")}
-                                        className="mr-3 text-center font-small px-3 py-2 rounded-md text-white focus:outline-none border-2 border-purple-600 hover:border-yellow-400">
-                                        Dashboard
-                                    </button>
-                                </Link>
-                                <SettingsMenu handleLogout={handleLogout}/>
-                            </div>
-                        }
+                        <DesktopMenu loggedIn={loggedIn} setErrorMessage={setErrorMessage}
+                                     handleLogout={showLogoutModal}/>
                     </div>
                 </div>
-
 
                 <Switch>
                     <Route path="/dashboard">
@@ -145,6 +117,8 @@ const App = () => {
                     </Route>
                 </Switch>
             </div>
+
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} modalAction={handleLogout}/>
         </Router>
     );
 }

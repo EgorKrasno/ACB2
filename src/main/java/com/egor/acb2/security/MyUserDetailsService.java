@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 import static com.egor.acb2.enumeration.Role.ROLE_ADMIN;
+import static com.egor.acb2.enumeration.Role.ROLE_USER;
 
 @Service
 @Transactional
@@ -51,8 +52,8 @@ public class MyUserDetailsService implements UserDetailsService {
         validateUser(request);
         User newUser = new User();
         newUser.setActive(true);
-//        newUser.setEmail(request.getEmail());
-        newUser.setUsername(request.getEmail()); //set email as the username
+        newUser.setEmail(request.getEmail());
+        newUser.setUsername(request.getEmail()); //set email as the username also
         newUser.setFirstName(request.getFirstName());
         newUser.setLastName(request.getLastName());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -60,8 +61,8 @@ public class MyUserDetailsService implements UserDetailsService {
         newUser.setJoinDate(new Date());
 
         //testing purposes, move to super admin later
-        newUser.setRole(ROLE_ADMIN.toString());
-        newUser.setAuthorities(ROLE_ADMIN.getAuthorities()); // String[]
+        newUser.setRole(ROLE_USER.toString());
+        newUser.setAuthorities(ROLE_USER.getAuthorities()); // String[]
 
         userRepository.save(newUser);
         return newUser;

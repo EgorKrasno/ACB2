@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -32,12 +33,13 @@ public class CheckInController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('checkIn:create')")
     public ResponseEntity<CheckIn> saveCheckIn(Authentication authentication, @Valid @RequestBody CheckInRequest request) throws InvalidStatusException {
         CheckIn checkIn = checkInService.saveCheckIn(request, authentication);
-        return new ResponseEntity<>(checkIn, OK);
+        return new ResponseEntity<>(checkIn, CREATED);
     }
 
-//    @PreAuthorize("hasAuthority('checkIn:read')")
+    @PreAuthorize("hasAuthority('checkIn:read')")
     @GetMapping("/today")
     public ResponseEntity<List<TodayStatusResponse>> getTodayStatus(Authentication authentication) {
         List<TodayStatusResponse> checkIns = checkInService.getTodayStatus(authentication);
@@ -45,6 +47,7 @@ public class CheckInController {
     }
 
     @GetMapping("/checked")
+    @PreAuthorize("hasAuthority('checkIn:create')")
     public ResponseEntity<Boolean> isCheckedIn(Authentication authentication) {
         return new ResponseEntity<>(checkInService.isCheckedIn(authentication), OK);
     }

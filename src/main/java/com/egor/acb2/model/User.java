@@ -19,7 +19,6 @@ public class User implements Serializable {
     @Column(nullable = false, updatable = false)
     private long id;
 
-    //Passed in by User in UserResgisterRequest
     private String username;
     private String firstName;
     private String lastName;
@@ -37,6 +36,10 @@ public class User implements Serializable {
     private boolean isNotLocked;
 
     public User(long id, String username, String firstName, String lastName, String password){
-
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 }

@@ -27,10 +27,10 @@ const Admin = () => {
     return (
         <>
             {!loading ?
-                <div className="flex justify-center space-x-8 space-y-8">
+                <div className="flex flex-col sm:flex-row justify-center sm:space-x-8 space-y-4 sm:h-screen sm:-mt-20 sm:pt-16 pb-8">
                     {/*Main Stack*/}
-                    <div className="container max-w-2xl">
-                        <div className="container flex max-w-2xl my-8 space-x-8">
+                    <div className="container max-w-2xl flex flex-col">
+                        <div className="container flex max-w-2xl mb-8 mt-4 space-x-8">
                             <div className="container w-full bg-primary shadow rounded-xl h-40">
 
                             </div>
@@ -39,8 +39,8 @@ const Admin = () => {
                             </div>
                         </div>
                         {/* Today Dashboard */}
-                        <div className="max-w-2xl overflow-x-auto">
-                            <div className="inline-block min-w-full shadow rounded-xl bg-primary overflow-hidden">
+                        <div className="max-w-2xl overflow-x-auto flex sm:flex-col" >
+                            <div className="inline-block min-w-full shadow rounded-xl bg-primary flex flex-col overflow-hidden">
                                 <h1 className="text-white px-8 pt-5 font-bold text-2xl tracking-wide">Today</h1>
                                 <div className="flex border-b border-gray-600 py-3">
                                     <h3 className="w-2/5 pl-8 text-sm uppercase text-white">Name</h3>
@@ -50,12 +50,14 @@ const Admin = () => {
                                 </div>
 
                                 {userList.length > 0 ?
-                                    <div className="h-96 overflow-y-scroll">
-                                        <table className="min-w-full leading-normal">
-                                            <tbody>
-                                            {userList.map(user => <UserRow key={user.name} user={user}/>)}
-                                            </tbody>
-                                        </table>
+                                    <div className="flex flex-col overflow-hidden">
+                                        <div className="overflow-y-auto">
+                                            <table className="min-w-full leading-normal">
+                                                <tbody>
+                                                {userList.map(user => <UserRow key={user.name} user={user}/>)}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div> : <div className="h-96 flex items-center justify-center"><h1
                                         className="text-white text-xl">No check ins yet</h1></div>
                                 }
@@ -63,7 +65,36 @@ const Admin = () => {
                         </div>
                     </div>
                     {/* Right Side Stack */}
-                    <div className="w-80 bg-primary shadow rounded-xl">
+                    <div className="w-94 sm:w-72 bg-primary shadow rounded-xl px-8 py-6">
+                        <div className="w-full flex items-center justify-between mb-8">
+                            <p className="text-gray-200 text-2xl font-semibold">
+                                Activity
+                            </p>
+                        </div>
+                        <div className="flex items-start mb-6 rounded justify-between">
+                            <div className="block relative">
+                                <div
+                                    className="rounded-full h-11 w-11 border-solid border-2 border-purple-500"/>
+
+                                <div className="absolute inset-0 flex justify-center items-center z-10">
+                                    <h3 className="text-white text-lg font-semibold tracking-wider">EK</h3>
+                                </div>
+                            </div>
+                            <div/>
+                            <div className="flex items-center flex-1 justify-between">
+                                <div className="flex text-sm flex-col w-full ml-2 items-start justify-between">
+                                    <p className="text-gray-200">
+                                        <span className="font-bold mr-1">
+                                            Egor
+                                        </span>
+                                        signed in
+                                    </p>
+                                    <p className="text-gray-400">
+                                        08:35
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

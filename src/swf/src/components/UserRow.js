@@ -48,7 +48,7 @@ const UserRow = ({user}) => {
             <td className="pl-8 py-4 text-sm w-2/5">
                 <div className="flex items-center">
                     <div className="flex-shrink-0">
-                        <a href="#" className="block relative">
+                        <a href="www.google.com" className="block relative">
                             <div
                                 className="mx-auto rounded-full h-11 w-11 border-solid border-2 border-purple-500"/>
                             <div className="absolute inset-0 flex justify-center items-center z-10">

@@ -4,18 +4,15 @@ import com.egor.acb2.exception.InvalidStatusException;
 import com.egor.acb2.model.CheckIn;
 import com.egor.acb2.response.CheckInRequest;
 import com.egor.acb2.response.TodayStatusResponse;
-import com.egor.acb2.security.UserPrincipal;
 import com.egor.acb2.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.text.ParseException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -42,6 +39,7 @@ public class CheckInController {
     @PreAuthorize("hasAuthority('checkIn:read')")
     @GetMapping("/today")
     public ResponseEntity<List<TodayStatusResponse>> getTodayStatus(Authentication authentication) {
+        System.out.println(authentication.getAuthorities());
         List<TodayStatusResponse> checkIns = checkInService.getTodayStatus(authentication);
         return new ResponseEntity<>(checkIns, OK);
     }

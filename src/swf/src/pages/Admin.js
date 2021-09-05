@@ -27,51 +27,47 @@ const Admin = () => {
     return (
         <>
             {!loading ?
-                <div className="container mx-auto max-w-2xl overflow-x-auto">
-                        <div className="inline-block min-w-full shadow rounded-xl overflow-hidden"
-                             style={{backgroundColor: "#171727"}}>
+                <div className="flex justify-center space-x-8 space-y-8">
+                    {/*Main Stack*/}
+                    <div className="container max-w-2xl">
+                        <div className="container flex max-w-2xl my-8 space-x-8">
+                            <div className="container w-full bg-primary shadow rounded-xl h-40">
 
-                            <h1 className="text-white px-8 pt-5 font-bold text-2xl tracking-wide">Today</h1>
-
-                            <div className="flex border-b border-gray-600 py-3">
-                                <h3 className="w-2/5 pl-8 text-sm uppercase text-white">Name</h3>
-                                <h3 className="w-1/5 pl-3 text-sm uppercase text-white">Covid Status</h3>
-                                <h3 className="w-1/5 text-sm uppercase text-white">Status</h3>
-                                <h3 className="w-1/5 text-sm uppercase text-white">Time </h3>
                             </div>
+                            <div className="w-full bg-primary shadow rounded-xl h-40">
 
-                            {userList.length > 0 ?
-                                <div className="h-96 overflow-y-scroll">
-                                    {/*<thead>*/}
-                                    {/*<tr>*/}
-                                    {/*    <th scope="col"*/}
-                                    {/*        className="px-8 py-3 border-b border-gray-500 text-gray-200 text-left text-sm uppercase font-normal">*/}
-                                    {/*        Name*/}
-                                    {/*    </th>*/}
-                                    {/*    <th scope="col"*/}
-                                    {/*        className="px-8 py-3 border-b border-gray-500 text-gray-200 text-left text-sm uppercase font-normal">*/}
-                                    {/*        COVID Status*/}
-                                    {/*    </th>*/}
-                                    {/*    <th scope="col"*/}
-                                    {/*        className="px-8 py-3 border-b border-gray-500 text-gray-200 text-left text-sm uppercase font-normal">*/}
-                                    {/*        Status*/}
-                                    {/*    </th>*/}
-                                    {/*    <th scope="col"*/}
-                                    {/*        className="px-8 py-3 border-b border-gray-500 text-gray-200 text-left text-sm uppercase font-normal">*/}
-                                    {/*        Time*/}
-                                    {/*    </th>*/}
-                                    {/*</tr>*/}
-                                    {/*</thead>*/}
-                                <table className="min-w-full leading-normal">
-
-                                    <tbody>
-                                    {userList.map(user => <UserRow key={user.name} user={user}/>)}
-                                    </tbody>
-                                </table></div> : <div className="h-48 flex items-center justify-center"><h1
-                                    className="text-white text-xl">No check ins yet</h1></div>
-                            }
+                            </div>
                         </div>
-                </div> : <BlobLoader/>
+                        {/* Today Dashboard */}
+                        <div className="max-w-2xl overflow-x-auto">
+                            <div className="inline-block min-w-full shadow rounded-xl bg-primary overflow-hidden">
+                                <h1 className="text-white px-8 pt-5 font-bold text-2xl tracking-wide">Today</h1>
+                                <div className="flex border-b border-gray-600 py-3">
+                                    <h3 className="w-2/5 pl-8 text-sm uppercase text-white">Name</h3>
+                                    <h3 className="w-1/5 pl-3 text-sm uppercase text-white">Covid Status</h3>
+                                    <h3 className="w-1/5 text-sm uppercase text-white">Status</h3>
+                                    <h3 className="w-1/5 text-sm uppercase text-white">Time </h3>
+                                </div>
+
+                                {userList.length > 0 ?
+                                    <div className="h-96 overflow-y-scroll">
+                                        <table className="min-w-full leading-normal">
+                                            <tbody>
+                                            {userList.map(user => <UserRow key={user.name} user={user}/>)}
+                                            </tbody>
+                                        </table>
+                                    </div> : <div className="h-96 flex items-center justify-center"><h1
+                                        className="text-white text-xl">No check ins yet</h1></div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    {/* Right Side Stack */}
+                    <div className="w-80 bg-primary shadow rounded-xl">
+
+                    </div>
+                </div>
+                : <BlobLoader/>
             }
         </>
 

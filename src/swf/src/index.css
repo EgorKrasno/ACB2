@@ -9,3 +9,24 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: #fff !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.25rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #171727;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8B5CF6;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FBBF24;
+}

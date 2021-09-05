@@ -2,12 +2,10 @@ package com.egor.acb2.repository;
 
 import com.egor.acb2.model.CheckIn;
 import com.egor.acb2.model.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,19 +16,15 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+//resets the auto-increment before every test
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class CheckInRepositoryTest {
 
     @Autowired
     private CheckInRepository underTest;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @BeforeEach
     void setUp() throws ParseException {
-        User user = new User(1L, "test@test.com", "First", "Last", "password");
-        userRepository.save(user);
-
         CheckIn checkInOne = new CheckIn(1L, "y", "y", "y", "y", "Present", "first1 last1",
                 new SimpleDateFormat("yyyy-MM-dd").parse("2021-01-01"),
                 new SimpleDateFormat("HH:mm").parse("16:30"));
@@ -59,6 +53,8 @@ class CheckInRepositoryTest {
                 (new SimpleDateFormat("yyyy-MM-dd").parse("2021-01-01")));
 
         assertEquals(2, result.size());
+        result.forEach(System.out::println);
+//        System.out.println("HELLO WORLD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         assertTrue(result.stream().map(CheckIn::getId).allMatch(id -> Arrays.asList(1L, 2L).contains(id)));
     }
 

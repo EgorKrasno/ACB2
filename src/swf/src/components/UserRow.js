@@ -9,7 +9,7 @@ const UserRow = ({user}) => {
             let hours = parseInt(sp[0], 10);
             let mins = parseInt(sp[1], 10);
 
-            if (hours > 8 || (hours === 8 && mins >= 46)) {
+            if (hours > 8 || (hours === 8 && mins > 45)) {
                 return "text-yellow-900 bg-yellow-400";
             } else {
                 return "text-green-900 bg-green-400";
@@ -45,7 +45,7 @@ const UserRow = ({user}) => {
 
     return (
         <tr>
-            <td className="px-8 py-5 text-sm">
+            <td className="pl-8 py-4 text-sm w-2/5">
                 <div className="flex items-center">
                     <div className="flex-shrink-0">
                         <a href="#" className="block relative">
@@ -57,22 +57,22 @@ const UserRow = ({user}) => {
                             <div/>
                         </a>
                     </div>
-                    <div className="ml-3">
+                    <div className="ml-3 w-1/2">
                         <p className="text-gray-200 whitespace-no-wrap capitalize">
                             {user.name}
                         </p>
                     </div>
                 </div>
             </td>
-            <td className="px-8 py-5 text-sm">
+            <td className="py-5 text-sm w-1/5 pl-3">
                                 <span
                                     className={`relative inline-block rounded-full py-1 font-semibold leading-tight ${isCovid()}`}>
-                                    <span className="relative">
+                                    <span className="relativex">
                                         {user.covidStatus !== null ? user.covidStatus : "N/A"}
                                     </span>
                                 </span>
             </td>
-            <td className="px-8 py-5 text-sm">
+            <td className="py-5 text-sm w-1/5">
                                 <span
                                     className={`relative inline-block rounded-full py-1 font-semibold leading-tight ${isEmergency()}`}>
                                     <span className="relative">
@@ -80,7 +80,7 @@ const UserRow = ({user}) => {
                                     </span>
                                 </span>
             </td>
-            <td className="px-8 py-5 text-sm">
+            <td className="py-5 text-sm w-1/5">
                                 <span
                                     className={`relative inline-block rounded-full px-3 text-gray-200 py-1 font-semibold leading-tight ${isLate()}`}>
                                     <span className="relative">

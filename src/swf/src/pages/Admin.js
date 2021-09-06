@@ -2,7 +2,7 @@ import UserRow from "../components/UserRow";
 import {useEffect, useState} from "react";
 import {getTodaysStatus} from "../services/Service";
 import BlobLoader from "../components/BlobLoader";
-import {FiAirplay, HiOutlineRefresh} from "react-icons/all";
+import {HiOutlineRefresh} from "react-icons/all";
 
 const Admin = () => {
     const [userList, setUserList] = useState([]);

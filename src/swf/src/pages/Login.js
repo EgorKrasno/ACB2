@@ -1,6 +1,6 @@
 import {useState} from "react";
-import SubmitButton from "../components/SubmitButton";
 import FormLayout from "../components/FormLayout";
+import LoginButton from "../components/LoginButton";
 
 const Login = ({handleLogin, errorMessage, setErrorMessage, loading}) => {
     const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ const Login = ({handleLogin, errorMessage, setErrorMessage, loading}) => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <SubmitButton loading={loading} value="Login"/>
+                <LoginButton loading={loading} />
             </form>
         </FormLayout>
     );

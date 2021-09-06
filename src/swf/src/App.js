@@ -99,20 +99,20 @@ const App = () => {
                 </div>
 
                 <Switch>
-                    <Route path="/dashboard">
+                    <Route exact path="/dashboard">
                         {!loggedIn ? <Redirect to="/login"/> : <Admin/>}
                     </Route>
-                    <Route path="/signup">
+                    <Route exact path="/signup">
                         {loggedIn ? <Home user={userData}/> :
-                            <SignUp loading={loading} handleSubmit={handleSubmit} errorMessage={errorMessage}
+                            <SignUp loading={loading} serverSubmit={handleSubmit} errorMessage={errorMessage}
                                     setErrorMessage={setErrorMessage}/>}
                     </Route>
-                    <Route path="/login">
+                    <Route exact path="/login">
                         {loggedIn ? <Redirect to="/"/> :
                             <Login loading={loading} handleLogin={handleLogin} errorMessage={errorMessage}
                                    setErrorMessage={setErrorMessage}/>}
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                         {!loggedIn ? <Redirect to="/login"/> : <Home user={userData}/>}
                     </Route>
                 </Switch>

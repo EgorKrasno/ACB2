@@ -42,10 +42,21 @@ const UserRow = ({user}) => {
         return sp[0].charAt(0).toUpperCase() + sp[1].charAt(0).toUpperCase();
     }
 
+    //I have to do this because my long last name literally breaks the mobile interface on small phones
+    const nameBuilder = () => {
+        let nameSplit = user.name.split(' ');
+        let firstName = nameSplit[0];
+        let lastName = nameSplit[1];
+        if (lastName.length > 12) {
+            lastName = nameSplit[1].substring(0,12) + '...'
+        }
+        return firstName + ' ' + lastName;
+    }
+
 
     return (
         <tr>
-            <td className="pl-8 py-4 text-sm w-2/5">
+            <td className="pl-4 sm:pl-8 py-4 text-sm w-2/5">
                 <div className="flex items-center">
                     <div className="flex-shrink-0">
                         <a href="www.google.com" className="block relative">
@@ -59,7 +70,7 @@ const UserRow = ({user}) => {
                     </div>
                     <div className="ml-3 w-1/2">
                         <p className="text-gray-200 whitespace-no-wrap capitalize">
-                            {user.name}
+                            {nameBuilder()}
                         </p>
                     </div>
                 </div>
@@ -67,7 +78,7 @@ const UserRow = ({user}) => {
             <td className="py-5 text-sm w-1/5 pl-3">
                                 <span
                                     className={`relative inline-block rounded-full py-1 font-semibold leading-tight ${isCovid()}`}>
-                                    <span className="relativex">
+                                    <span className="relative">
                                         {user.covidStatus !== null ? user.covidStatus : "N/A"}
                                     </span>
                                 </span>
@@ -82,7 +93,7 @@ const UserRow = ({user}) => {
             </td>
             <td className="py-5 text-sm w-1/5">
                                 <span
-                                    className={`relative inline-block rounded-full px-3 text-gray-200 py-1 font-semibold leading-tight ${isLate()}`}>
+                                    className={`relative inline-block rounded-full px-1.5 sm:px-3 text-gray-200 py-1 font-semibold leading-tight ${isLate()}`}>
                                     <span className="relative">
                                         {user.checkInTime !== null ? user.checkInTime.slice(0,5) : "N/A"}
                                     </span>

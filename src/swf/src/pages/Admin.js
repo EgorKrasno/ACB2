@@ -2,6 +2,7 @@ import UserRow from "../components/UserRow";
 import {useEffect, useState} from "react";
 import {getTodaysStatus} from "../services/Service";
 import BlobLoader from "../components/BlobLoader";
+import {FiAirplay, HiOutlineRefresh} from "react-icons/all";
 
 const Admin = () => {
     const [userList, setUserList] = useState([]);
@@ -9,25 +10,30 @@ const Admin = () => {
 
     useEffect(() => {
         async function fetchData() {
-            setLoading(true);
-            try {
-                const response = await getTodaysStatus()
-                const data = await response.json();
-                setUserList(data);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setLoading(false);
-            }
+            await fetchCheckInData();
         }
 
         fetchData();
     }, [])
 
+    const fetchCheckInData = async () => {
+        setLoading(true);
+        try {
+            const response = await getTodaysStatus()
+            const data = await response.json();
+            setUserList(data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <>
             {!loading ?
-                <div className="flex flex-col sm:flex-row justify-center sm:space-x-8 space-y-4 sm:h-screen sm:-mt-20 sm:pt-16 pb-8">
+                <div
+                    className="flex flex-col sm:flex-row justify-center sm:space-x-8 space-y-4 sm:h-screen sm:-mt-20 sm:pt-16 pb-8 sm:mx-8">
                     {/*Main Stack*/}
                     <div className="container max-w-2xl flex flex-col">
                         <div className="container flex max-w-2xl mb-8 mt-4 space-x-8">
@@ -39,12 +45,20 @@ const Admin = () => {
                             </div>
                         </div>
                         {/* Today Dashboard */}
-                        <div className="max-w-2xl overflow-x-auto flex sm:flex-col" >
-                            <div className="inline-block min-w-full shadow rounded-xl bg-primary flex flex-col overflow-hidden">
-                                <h1 className="text-white px-8 pt-5 font-bold text-2xl tracking-wide">Today</h1>
-                                <div className="flex border-b border-gray-600 py-3">
-                                    <h3 className="w-2/5 pl-8 text-sm uppercase text-white">Name</h3>
-                                    <h3 className="w-1/5 pl-3 text-sm uppercase text-white">Covid Status</h3>
+                        <div className="max-w-2xl overflow-x-auto flex sm:flex-col">
+                            <div
+                                className="inline-block min-w-full shadow rounded-xl bg-primary flex flex-col overflow-hidden">
+                                <div className="flex flex-row justify-between items-center mx-4 sm:mx-8 mt-4">
+                                    <h1 className="text-white font-bold text-2xl tracking-wide">Today</h1>
+                                    <div
+                                        onClick={fetchCheckInData}
+                                        className="text-purple-600 hover:text-yellow-400 transition duration-100 ease-out p-2">
+                                        <HiOutlineRefresh size={26}/>
+                                    </div>
+                                </div>
+                                <div className="flex border-b border-gray-600 py-2">
+                                    <h3 className="w-2/5 pl-4 sm:pl-8 text-sm uppercase text-white">Name</h3>
+                                    <h3 className="w-1/5 pl-3 text-sm uppercase text-white">Covid</h3>
                                     <h3 className="w-1/5 text-sm uppercase text-white">Status</h3>
                                     <h3 className="w-1/5 text-sm uppercase text-white">Time </h3>
                                 </div>
@@ -87,7 +101,7 @@ const Admin = () => {
                                         <span className="font-bold mr-1">
                                             Egor
                                         </span>
-                                        signed in
+                                        Checked in
                                     </p>
                                     <p className="text-gray-400">
                                         08:35

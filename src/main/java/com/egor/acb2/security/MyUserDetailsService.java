@@ -52,10 +52,10 @@ public class MyUserDetailsService implements UserDetailsService {
         validateUser(request);
         User newUser = new User();
         newUser.setActive(true);
-        newUser.setEmail(request.getEmail());
-        newUser.setUsername(request.getEmail()); //set email as the username also
-        newUser.setFirstName(request.getFirstName());
-        newUser.setLastName(request.getLastName());
+        newUser.setEmail(request.getEmail().trim());
+        newUser.setUsername(request.getEmail().trim()); //set email as the username also
+        newUser.setFirstName(request.getFirstName().trim());
+        newUser.setLastName(request.getLastName().trim());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         newUser.setNotLocked(true);
         newUser.setJoinDate(new Date());
@@ -80,8 +80,8 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     private void validateUser(UserRegisterRequest request) throws EmailExistsException {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailExistsException(request.getEmail() + " is already taken, do you want to log in?");
+        if (userRepository.existsByEmail(request.getEmail().trim())) {
+            throw new EmailExistsException(request.getEmail().trim() + " is already taken, do you want to log in?");
         }
     }
 }

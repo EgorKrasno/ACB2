@@ -39,6 +39,7 @@ build/
 
 # From ReactJs
 src/swf/node_modules
+src/swf/node/
 src/swf/.pnp
 .pnp.js
 

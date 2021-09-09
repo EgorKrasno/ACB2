@@ -61,8 +61,8 @@ public class MyUserDetailsService implements UserDetailsService {
         newUser.setJoinDate(new Date());
 
         //testing purposes, move to super admin later
-        newUser.setRole(ROLE_ADMIN.toString());
-        newUser.setAuthorities(ROLE_ADMIN.getAuthorities()); // String[]
+        newUser.setRole(ROLE_USER.toString());
+        newUser.setAuthorities(ROLE_USER.getAuthorities()); // String[]
 
         userRepository.save(newUser);
         return newUser;

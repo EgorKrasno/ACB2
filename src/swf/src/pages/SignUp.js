@@ -13,6 +13,7 @@ const SignUp = ({serverSubmit, errorMessage, setErrorMessage, loading}) => {
         await serverSubmit(data);
     };
 
+
     return (
         <FormLayout errorMessage={errorMessage} label="Sign up">
             <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
@@ -116,6 +117,7 @@ const SignUp = ({serverSubmit, errorMessage, setErrorMessage, loading}) => {
             </form>
         </FormLayout>
     )
+        ;
 }
 
 export default SignUp;

@@ -10,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +54,7 @@ class CheckInRepositoryTest {
 
         assertEquals(2, result.size());
         result.forEach(System.out::println);
+//        System.out.println("HELLO WORLD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         assertTrue(result.stream().map(CheckIn::getId).allMatch(id -> Arrays.asList(1L, 2L).contains(id)));
     }
 

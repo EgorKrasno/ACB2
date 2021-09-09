@@ -29,6 +29,7 @@ public class CheckInService {
 
     public CheckIn saveCheckIn(CheckInRequest request, Authentication auth) throws InvalidStatusException {
         String ac = request.getAc();
+//            throw new InvalidStatusException("Invalid Accountability Status");
         User user = userRepository.findUserByUsername(auth.getName());
         String fullName = user.getFirstName() + " " + user.getLastName();
         Date date = new Date();

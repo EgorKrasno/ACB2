@@ -27,7 +27,7 @@ import static java.util.Arrays.stream;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.secret}")
+    @Value("${JWT}")
     private String secret;
 
     public String generateJwtToken(UserPrincipal userPrincipal) {

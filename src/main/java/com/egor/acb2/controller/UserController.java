@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.egor.acb2.constants.SecurityConstant.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.OK;
-
 
 @RestController
 @RequestMapping(value = "user")
